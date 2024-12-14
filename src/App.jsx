@@ -12,12 +12,13 @@ function App() {
     duration: 10,
   });
 
+  const isValidInput = userInput.duration >= 1;
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserInput((prevInput) => {
       return {
         ...prevInput,
-        [name]: value,
+        [name]: +value,
       };
     });
   };
@@ -25,7 +26,12 @@ function App() {
     <>
       <Header />
       <UserInput handleChange={handleChange} userInput={userInput} />
-      <Result input={userInput} />
+      {!isValidInput && (
+        <p style={{ textAlign: "center" }}>
+          Please enter a valid input (non-negative numbers)
+        </p>
+      )}
+      {isValidInput && <Result input={userInput} />}
     </>
   );
 }
